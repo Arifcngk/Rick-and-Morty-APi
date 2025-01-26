@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rickandmorty/views/screen/charecters_view/characters_view_model.dart';
+import 'package:rickandmorty/widget/character_card_listview.dart';
 import 'package:rickandmorty/widget/character_card_widget.dart';
 import 'package:provider/provider.dart';
 
@@ -13,7 +14,6 @@ class CharectersView extends StatefulWidget {
 class _CharectersViewState extends State<CharectersView> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     context.read<CharactersViewModel>().getCharacters();
   }
@@ -32,17 +32,10 @@ class _CharectersViewState extends State<CharectersView> {
               if (viewModel.charactersModel == null) {
                 return const Center(child: CircularProgressIndicator());
               } else {
-                return Flexible(
-                  child: ListView.builder(
-                    itemCount: viewModel.charactersModel!.characters.length,
-                    itemBuilder: (context, index) {
-                      final characterModel =
-                          viewModel.charactersModel!.characters[index];
-                      return CharacterCardWidget(
-                        characterModel: characterModel,
-                      );
-                    },
-                  ),
+                return CharacterCardListView(
+                  characters: viewModel.charactersModel!.characters,
+                  onLoadMore: () => viewModel.getCharacterMore(),
+                  loadMore: viewModel.loadMore,
                 );
               }
             },
@@ -53,7 +46,8 @@ class _CharectersViewState extends State<CharectersView> {
   }
 
   Widget _searchInputWidget() {
-    return TextField(
+    return TextFormField(
+      textInputAction: TextInputAction.search,
       decoration: InputDecoration(
           hintText: "Karekterlerde ara",
           border: const OutlineInputBorder(),

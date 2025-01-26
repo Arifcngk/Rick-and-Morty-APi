@@ -1,6 +1,5 @@
-//*****************************************************//
 class CharactersModel {
-  final CaracteresInfo info;
+   CaracteresInfo info;
   final List<CharacterModel> characters;
 
   CharactersModel({required this.info, required this.characters});
@@ -14,7 +13,7 @@ class CharactersModel {
   }
 }
 
-//*****************************************************//
+
 //karakter ınfo classı
 class CaracteresInfo {
   final int count;
@@ -77,7 +76,7 @@ class CharacterModel {
   }
 }
 
-// karakter dünyları ınfo classı
+// karakter dünyları info class
 class LocationModel {
   final String name;
   final String url;
