@@ -1,7 +1,9 @@
 // ignore_for_file: unused_local_variable
 
 import 'package:flutter/material.dart';
+import 'package:rickandmorty/app/locator.dart';
 import 'package:rickandmorty/model/characters_model.dart';
+import 'package:rickandmorty/service/preferences_service.dart';
 import 'package:rickandmorty/widget/character_card_widget.dart';
 
 class CharacterCardListView extends StatefulWidget {
@@ -21,11 +23,26 @@ class CharacterCardListView extends StatefulWidget {
 
 class _CharacterCardListViewState extends State<CharacterCardListView> {
   final _scrollController = ScrollController();
+  List<int> _favoriteList = [];
+  bool _isLoading = true;
 
   @override
   void initState() {
     _detectScrollBottom();
+    _getFavoriteCharacters();
     super.initState();
+  }
+
+  void _setIsLoading(bool value) {
+    setState(() {
+      _isLoading = value;
+    });
+  }
+
+  void _getFavoriteCharacters() async {
+    _favoriteList = locator<PreferencesService>().getCharacters();
+    _setIsLoading(false);
+    setState(() {});
   }
 
   void _detectScrollBottom() {
@@ -50,23 +67,31 @@ class _CharacterCardListViewState extends State<CharacterCardListView> {
 
   @override
   Widget build(BuildContext context) {
-    return Flexible(
-      child: ListView.builder(
-        controller: _scrollController,
-        itemCount: widget.characters.length,
-        itemBuilder: (context, index) {
-          final characterModel = widget.characters[index];
-          return Column(
-            children: [
-              CharacterCardWidget(
-                characterModel: characterModel,
-              ),
-              if (widget.loadMore && index == widget.characters.length - 1)
-                const Center(child: CircularProgressIndicator.adaptive()),
-            ],
-          );
-        },
-      ),
-    );
+    if (_isLoading) {
+      return const Center(
+        child: CircularProgressIndicator.adaptive(),
+      );
+    } else {
+      return Flexible(
+        child: ListView.builder(
+          controller: _scrollController,
+          itemCount: widget.characters.length,
+          itemBuilder: (context, index) {
+            final characterModel = widget.characters[index];
+            final bool isFavorited = _favoriteList.contains(characterModel.id);
+            return Column(
+              children: [
+                CharacterCardWidget(
+                  characterModel: characterModel,
+                  isFavorite: isFavorited,
+                ),
+                if (widget.loadMore && index == widget.characters.length - 1)
+                  const Center(child: CircularProgressIndicator.adaptive()),
+              ],
+            );
+          },
+        ),
+      );
+    }
   }
 }

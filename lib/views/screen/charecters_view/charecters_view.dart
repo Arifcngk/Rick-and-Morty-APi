@@ -20,40 +20,43 @@ class _CharectersViewState extends State<CharectersView> {
 
   @override
   Widget build(BuildContext context) {
+    final viewModel = context.watch<CharactersViewModel>();
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 17),
       child: Column(
         children: [
           const SizedBox(height: 12),
-          _searchInputWidget(),
+          _searchInputWidget(context, viewModel: viewModel),
           const SizedBox(height: 8),
-          Consumer<CharactersViewModel>(
-            builder: (context, viewModel, child) {
-              if (viewModel.charactersModel == null) {
-                return const Center(child: CircularProgressIndicator());
-              } else {
-                return CharacterCardListView(
-                  characters: viewModel.charactersModel!.characters,
-                  onLoadMore: () => viewModel.getCharacterMore(),
-                  loadMore: viewModel.loadMore,
-                );
-              }
-            },
+          Expanded(
+            // Listeyi düzgün şekilde göstermesi için Expanded kullanıyoruz
+            child: viewModel.charactersModel == null
+                ? const Center(child: CircularProgressIndicator())
+                : CharacterCardListView(
+                    characters: viewModel.charactersModel!.characters,
+                    onLoadMore: () => viewModel.getCharacterMore(),
+                    loadMore: viewModel.loadMore,
+                  ),
           ),
         ],
       ),
     );
   }
 
-  Widget _searchInputWidget() {
+  Widget _searchInputWidget(BuildContext context,
+      {required CharactersViewModel viewModel}) {
     return TextFormField(
       textInputAction: TextInputAction.search,
+      onFieldSubmitted: (value) => viewModel.getCharacterSearch(value),
       decoration: InputDecoration(
-          hintText: "Karekterlerde ara",
-          border: const OutlineInputBorder(),
-          prefixIcon: const Icon(Icons.search_sharp),
-          suffixIcon:
-              IconButton(onPressed: () {}, icon: const Icon(Icons.more_vert))),
+        hintText: "Karekterlerde ara",
+        border: const OutlineInputBorder(),
+        prefixIcon: const Icon(Icons.search_sharp),
+        suffixIcon: IconButton(
+          onPressed: () {},
+          icon: const Icon(Icons.more_vert),
+        ),
+      ),
     );
   }
 }

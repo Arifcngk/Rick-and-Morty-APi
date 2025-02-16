@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:rickandmorty/app/locator.dart';
 import 'package:rickandmorty/model/characters_model.dart';
@@ -46,5 +48,12 @@ class CharactersViewModel extends ChangeNotifier {
     } finally {
       setLoadMore(false);
     }
+  }
+
+  void getCharacterSearch(String name) async {
+    _charactersModel = null;
+    notifyListeners();
+    _charactersModel = await _apiService.getCharacters(args: {"name": name});
+    notifyListeners();
   }
 }

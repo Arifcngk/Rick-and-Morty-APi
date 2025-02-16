@@ -9,9 +9,9 @@ class ApiService {
     BaseOptions(baseUrl: "https://rickandmortyapi.com/api"),
   );
 
-  Future<CharactersModel> getCharacters({String? url}) async {
+  Future<CharactersModel> getCharacters({String? url, Map<String,dynamic>? args}) async {
     try {
-      final response = await _dio.get(url ?? "/character");
+      final response = await _dio.get(url ?? "/character", queryParameters: args);
       print(response.data); // Gelen veriyi kontrol edelim
       return CharactersModel.fromJson(response.data);
     } catch (e) {
