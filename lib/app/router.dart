@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:rickandmorty/views/app_view.dart';
 import 'package:rickandmorty/views/screen/charecters_view/characters_view_model.dart';
 import 'package:rickandmorty/views/screen/charecters_view/charecters_view.dart';
+import 'package:rickandmorty/views/screen/favoruites_view/favorite_view_model.dart';
 import 'package:rickandmorty/views/screen/favoruites_view/favoruites_view.dart';
 import 'package:rickandmorty/views/screen/locations_view/locations_view.dart';
 import 'package:rickandmorty/views/screen/sections_view/sections_view.dart';
@@ -45,8 +46,10 @@ final router = GoRouter(
           routes: [
             GoRoute(
               path: AppRoutes.favorites,
-              builder: (context, state) =>
-                  const FavoruitesView(), // Fix typo here
+              builder: (context, state) => ChangeNotifierProvider(
+                create: (context) => FavoriteViewModel(),
+                child: const FavoruitesView(),
+              ), // Fix typo here
             ),
           ],
         ),

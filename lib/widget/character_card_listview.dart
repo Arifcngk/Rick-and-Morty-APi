@@ -1,5 +1,6 @@
 // ignore_for_file: unused_local_variable
 
+
 import 'package:flutter/material.dart';
 import 'package:rickandmorty/app/locator.dart';
 import 'package:rickandmorty/model/characters_model.dart';
@@ -8,12 +9,12 @@ import 'package:rickandmorty/widget/character_card_widget.dart';
 
 class CharacterCardListView extends StatefulWidget {
   final List<CharacterModel> characters;
-  final VoidCallback onLoadMore;
+  final VoidCallback? onLoadMore;
   final bool loadMore;
   const CharacterCardListView({
     super.key,
     required this.characters,
-    required this.onLoadMore,
+    this.onLoadMore,
     this.loadMore = false,
   });
 
@@ -53,7 +54,7 @@ class _CharacterCardListViewState extends State<CharacterCardListView> {
       final delta = 200;
 
       if (maxScroll - currentPosition <= delta) {
-        widget.onLoadMore();
+        widget.onLoadMore!.call();
         print("alta inildi");
       }
     });
