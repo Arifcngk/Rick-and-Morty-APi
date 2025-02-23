@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rickandmorty/views/screen/charecters_view/characters_view_model.dart';
+import 'package:rickandmorty/widget/appbar_widget.dart';
 import 'package:rickandmorty/widget/character_card_listview.dart';
 import 'package:rickandmorty/widget/character_card_widget.dart';
 import 'package:provider/provider.dart';
@@ -21,24 +22,29 @@ class _CharectersViewState extends State<CharectersView> {
   @override
   Widget build(BuildContext context) {
     final viewModel = context.watch<CharactersViewModel>();
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 17),
-      child: Column(
-        children: [
-          const SizedBox(height: 12),
-          _searchInputWidget(context, viewModel: viewModel),
-          const SizedBox(height: 8),
-          Expanded(
-            // Listeyi düzgün şekilde göstermesi için Expanded kullanıyoruz
-            child: viewModel.charactersModel == null
-                ? const Center(child: CircularProgressIndicator())
-                : CharacterCardListView(
-                    characters: viewModel.charactersModel!.characters,
-                    onLoadMore: () => viewModel.getCharacterMore(),
-                    loadMore: viewModel.loadMore,
-                  ),
-          ),
-        ],
+    return Scaffold(
+      appBar: const AppbarWidget(
+        appBarName: "Rick and Morty",
+      ),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 17),
+        child: Column(
+          children: [
+            const SizedBox(height: 12),
+            _searchInputWidget(context, viewModel: viewModel),
+            const SizedBox(height: 8),
+            Expanded(
+              // Listeyi düzgün şekilde göstermesi için Expanded kullanıyoruz
+              child: viewModel.charactersModel == null
+                  ? const Center(child: CircularProgressIndicator())
+                  : CharacterCardListView(
+                      characters: viewModel.charactersModel!.characters,
+                      onLoadMore: () => viewModel.getCharacterMore(),
+                      loadMore: viewModel.loadMore,
+                    ),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -11,7 +11,7 @@ class AppView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _AppBarWidget(),
+   
       body: navigationShell,
       bottomNavigationBar: NavigationBarTheme(
         data: NavigationBarThemeData(
@@ -69,21 +69,4 @@ class AppView extends StatelessWidget {
     );
   }
 
-  AppBar _AppBarWidget() {
-    return AppBar(
-      title: const Text(
-        "Rick and Mort",
-        style: TextStyle(
-          fontSize: 22,
-          fontWeight: FontWeight.w500,
-        ),
-      ),
-      actions: [
-        IconButton(
-          onPressed: () {},
-          icon: Icon(Icons.settings),
-        ),
-      ],
-    );
-  }
 }

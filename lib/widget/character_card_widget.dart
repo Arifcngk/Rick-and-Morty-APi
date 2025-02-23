@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:rickandmorty/app/locator.dart';
+import 'package:rickandmorty/app/router.dart';
 import 'package:rickandmorty/model/characters_model.dart';
 import 'package:rickandmorty/service/preferences_service.dart';
+import 'package:rickandmorty/views/app_view.dart';
+import 'package:go_router/go_router.dart';
 
 class CharacterCardWidget extends StatefulWidget {
   final CharacterModel characterModel;
@@ -32,60 +35,66 @@ class _CharacterCardWidgetState extends State<CharacterCardWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 7),
-      child: Stack(
-        alignment: Alignment.topRight,
-        children: [
-          Container(
-            width: double.infinity,
-            height: 100,
-            decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.secondary,
-              borderRadius: BorderRadius.circular(6),
-            ),
-            child: Row(
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(6),
-                  child: Image.network(
-                    widget.characterModel.image,
-                    height: 100,
-                  ),
-                ),
-                const SizedBox(width: 17),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      widget.characterModel.name,
-                      style: const TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500,
-                      ),
+    return GestureDetector(
+      onTap: () => context.push(
+        AppRoutes.characterProfile,
+        extra: widget.characterModel,
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 7),
+        child: Stack(
+          alignment: Alignment.topRight,
+          children: [
+            Container(
+              width: double.infinity,
+              height: 100,
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.secondary,
+                borderRadius: BorderRadius.circular(6),
+              ),
+              child: Row(
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(6),
+                    child: Image.network(
+                      widget.characterModel.image,
+                      height: 100,
                     ),
-                    const SizedBox(height: 7),
-                    _infoTextMethod(
-                        type: "Köken",
-                        value: widget.characterModel.originModel.name),
-                    const SizedBox(height: 5),
-                    _infoTextMethod(
-                        type: "Durum",
-                        value:
-                            "${widget.characterModel.status}-${widget.characterModel.species}"),
-                  ],
-                )
-              ],
+                  ),
+                  const SizedBox(width: 17),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        widget.characterModel.name,
+                        style: const TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      const SizedBox(height: 7),
+                      _infoTextMethod(
+                          type: "Köken",
+                          value: widget.characterModel.originModel.name),
+                      const SizedBox(height: 5),
+                      _infoTextMethod(
+                          type: "Durum",
+                          value:
+                              "${widget.characterModel.status}-${widget.characterModel.species}"),
+                    ],
+                  )
+                ],
+              ),
             ),
-          ),
-          IconButton(
-              onPressed: favoriteCharacter,
-              icon: Icon(
-                widget.isFavorite
-                    ? Icons.bookmark
-                    : Icons.bookmark_border_outlined,
-              ))
-        ],
+            IconButton(
+                onPressed: favoriteCharacter,
+                icon: Icon(
+                  widget.isFavorite
+                      ? Icons.bookmark
+                      : Icons.bookmark_border_outlined,
+                ))
+          ],
+        ),
       ),
     );
   }

@@ -1,7 +1,9 @@
 import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:rickandmorty/model/characters_model.dart';
 import 'package:rickandmorty/views/app_view.dart';
+import 'package:rickandmorty/views/screen/charecter_detail_view/charecter_detail_view.dart';
 import 'package:rickandmorty/views/screen/charecters_view/characters_view_model.dart';
 import 'package:rickandmorty/views/screen/charecters_view/charecters_view.dart';
 import 'package:rickandmorty/views/screen/favoruites_view/favorite_view_model.dart';
@@ -18,9 +20,13 @@ final _sectionsKey = GlobalKey<NavigatorState>();
 class AppRoutes {
   AppRoutes._();
   static const String characters = "/";
+
   static const String favorites = "/favorites";
   static const String locations = "/locations";
   static const String sections = "/sections";
+  static const String profileRouter = "/characterProfile";
+
+  static const String characterProfile = "/characterProfile";
 }
 
 final router = GoRouter(
@@ -33,12 +39,20 @@ final router = GoRouter(
           navigatorKey: _charactersKey, // Unique key for this branch
           routes: [
             GoRoute(
-              path: AppRoutes.characters,
-              builder: (context, state) => ChangeNotifierProvider(
-                create: (context) => CharactersViewModel(),
-                child: const CharectersView(),
-              ), // Fix typo here
-            ),
+                path: AppRoutes.characters,
+                builder: (context, state) => ChangeNotifierProvider(
+                      create: (context) => CharactersViewModel(),
+                      child: const CharectersView(),
+                    ), // Fix typo here
+                routes: [
+                  GoRoute(
+                      path: AppRoutes.characterProfile,
+                      builder: (context, state) {
+                        return CharecterDetailView(
+                          charecterModel: state.extra as CharacterModel,
+                        );
+                      }),
+                ]),
           ],
         ),
         StatefulShellBranch(
