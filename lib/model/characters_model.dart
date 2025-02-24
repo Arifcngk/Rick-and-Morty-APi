@@ -1,39 +1,17 @@
+import 'package:rickandmorty/model/info_model.dart';
+
 class CharactersModel {
-   CaracteresInfo info;
+  InfoModel info;
   final List<CharacterModel> characters;
 
   CharactersModel({required this.info, required this.characters});
   factory CharactersModel.fromJson(Map<String, dynamic> json) {
-    final info = CaracteresInfo.fromJson(json["info"]);
+    final info = InfoModel.fromMap(json["info"]);
 
     final characters = (json['results'] as List)
         .map((e) => CharacterModel.fromJson(e))
         .toList();
     return CharactersModel(info: info, characters: characters);
-  }
-}
-
-
-//karakter ınfo classı
-class CaracteresInfo {
-  final int count;
-  final int pages;
-  final String? next;
-  final String? prev;
-
-  CaracteresInfo(
-      {required this.count,
-      required this.pages,
-      required this.next,
-      required this.prev});
-
-  factory CaracteresInfo.fromJson(Map<String, dynamic> json) {
-    return CaracteresInfo(
-      count: json['count'],
-      pages: json['pages'],
-      next: json['next'],
-      prev: json['prev'],
-    );
   }
 }
 
@@ -69,7 +47,7 @@ class CharacterModel {
       species: json['species'],
       gender: json['gender'],
       image: json['image'],
-      locationModel: LocationModel.fromJson(json['location']),
+      locationModel: LocationModel.fromMap(json['location']),
       originModel: OriginModel.fromJson(json['origin']),
       episodeModel: List<String>.from(json['episode']),
     );
@@ -82,7 +60,7 @@ class LocationModel {
   final String url;
 
   LocationModel({required this.name, required this.url});
-  factory LocationModel.fromJson(Map<String, dynamic> json) {
+  factory LocationModel.fromMap(Map<String, dynamic> json) {
     return LocationModel(
       name: json['name'],
       url: json['url'],

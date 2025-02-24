@@ -4,11 +4,13 @@ import 'package:provider/provider.dart';
 import 'package:rickandmorty/model/characters_model.dart';
 import 'package:rickandmorty/views/app_view.dart';
 import 'package:rickandmorty/views/screen/charecter_detail_view/charecter_detail_view.dart';
+import 'package:rickandmorty/views/screen/charecter_detail_view/charecter_detail_view_model.dart';
 import 'package:rickandmorty/views/screen/charecters_view/characters_view_model.dart';
 import 'package:rickandmorty/views/screen/charecters_view/charecters_view.dart';
 import 'package:rickandmorty/views/screen/favoruites_view/favorite_view_model.dart';
 import 'package:rickandmorty/views/screen/favoruites_view/favoruites_view.dart';
 import 'package:rickandmorty/views/screen/locations_view/locations_view.dart';
+import 'package:rickandmorty/views/screen/locations_view/locations_view_model.dart';
 import 'package:rickandmorty/views/screen/sections_view/sections_view.dart';
 
 // Unique navigator keys for each branch
@@ -47,11 +49,11 @@ final router = GoRouter(
                 routes: [
                   GoRoute(
                       path: AppRoutes.characterProfile,
-                      builder: (context, state) {
-                        return CharecterDetailView(
-                          charecterModel: state.extra as CharacterModel,
-                        );
-                      }),
+                      builder: (context, state) => ChangeNotifierProvider(
+                            create: (context) => CharecterDetailViewModel(),
+                            child: CharecterDetailView(
+                                charecterModel: state.extra as CharacterModel),
+                          )),
                 ]),
           ],
         ),
@@ -72,7 +74,10 @@ final router = GoRouter(
           routes: [
             GoRoute(
               path: AppRoutes.locations,
-              builder: (context, state) => const LocationsView(),
+              builder: (context, state) => ChangeNotifierProvider(
+                create: (context) => LocationsViewModel(),
+                child: const LocationsView(),
+              ),
             ),
           ],
         ),
