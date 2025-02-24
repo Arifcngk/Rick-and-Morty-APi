@@ -3,14 +3,15 @@ import 'package:rickandmorty/app/locator.dart';
 import 'package:rickandmorty/model/location_model.dart';
 import 'package:rickandmorty/service/api_service.dart';
 
-class LocationsViewModel extends ChangeNotifier {
+
+class LocationViewmodel extends ChangeNotifier {
   final _apiService = locator<ApiService>();
 
   LocationModel? _locationModel;
   LocationModel? get locationModel => _locationModel;
 
   void getLocations() async {
-    final _locationModel = await _apiService.getAllLocations();
+    _locationModel = await _apiService.getAllLocations();
     notifyListeners();
   }
 
@@ -30,8 +31,8 @@ class LocationsViewModel extends ChangeNotifier {
         await _apiService.getAllLocations(url: _locationModel!.info.next);
     _page++;
 
-    // _locationModel!.info = data.info;
-    // _locationModel!.locations.addAll(data.locations);
+    _locationModel!.info = data.info;
+    _locationModel!.locations.addAll(data.locations);
 
     setLoadMore(false);
   }

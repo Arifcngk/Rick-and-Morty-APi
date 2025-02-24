@@ -3,6 +3,7 @@
 import 'package:dio/dio.dart';
 import 'package:rickandmorty/model/characters_model.dart';
 import 'package:rickandmorty/model/episode_model.dart';
+import 'package:rickandmorty/model/location_model.dart';
 
 class ApiService {
   final _dio = Dio(

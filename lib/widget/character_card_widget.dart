@@ -3,7 +3,6 @@ import 'package:rickandmorty/app/locator.dart';
 import 'package:rickandmorty/app/router.dart';
 import 'package:rickandmorty/model/characters_model.dart';
 import 'package:rickandmorty/service/preferences_service.dart';
-import 'package:rickandmorty/views/app_view.dart';
 import 'package:go_router/go_router.dart';
 
 class CharacterCardWidget extends StatefulWidget {
@@ -78,7 +77,7 @@ class _CharacterCardWidgetState extends State<CharacterCardWidget> {
                       const SizedBox(height: 7),
                       _infoTextMethod(
                           type: "Köken",
-                          value: widget.characterModel.originModel.name),
+                          value: widget.characterModel.origin.name),
                       const SizedBox(height: 5),
                       _infoTextMethod(
                           type: "Durum",

@@ -75,7 +75,7 @@ final router = GoRouter(
             GoRoute(
               path: AppRoutes.locations,
               builder: (context, state) => ChangeNotifierProvider(
-                create: (context) => LocationsViewModel(),
+                create: (context) => LocationViewmodel(),
                 child: const LocationsView(),
               ),
             ),

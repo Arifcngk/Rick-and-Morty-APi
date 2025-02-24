@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:rickandmorty/views/screen/charecters_view/characters_view_model.dart';
 import 'package:rickandmorty/widget/appbar_widget.dart';
 import 'package:rickandmorty/widget/character_card_listview.dart';
-import 'package:rickandmorty/widget/character_card_widget.dart';
 import 'package:provider/provider.dart';
 
 class CharectersView extends StatefulWidget {

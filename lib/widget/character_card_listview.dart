@@ -51,11 +51,11 @@ class _CharacterCardListViewState extends State<CharacterCardListView> {
       final maxScroll = _scrollController.position.maxScrollExtent;
       final currentPosition = _scrollController.position.pixels;
 
+      // ignore: prefer_const_declarations
       final delta = 200;
 
       if (maxScroll - currentPosition <= delta) {
         widget.onLoadMore!.call();
-        print("alta inildi");
       }
     });
   }

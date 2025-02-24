@@ -20,7 +20,7 @@ class _CharecterDetailViewState extends State<CharecterDetailView> {
     super.initState();
     context
         .read<CharecterDetailViewModel>()
-        .getEpisodes(widget.charecterModel.episodeModel);
+        .getEpisodes(widget.charecterModel.episode);
   }
 
   @override
@@ -31,10 +31,10 @@ class _CharecterDetailViewState extends State<CharecterDetailView> {
         appBar: const AppbarWidget(appBarName: "Karakter", transparent: true),
         body: Center(
           child: DecoratedContainer(
+            topChild: characterAvatar(context),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                characterAvatar(context),
                 Expanded(
                   child: Container(
                     decoration: BoxDecoration(
@@ -116,7 +116,7 @@ class _CharecterDetailViewState extends State<CharecterDetailView> {
       padding: const EdgeInsets.symmetric(horizontal: 20),
       alignment: Alignment.centerLeft,
       child: Text(
-        'Bölümler (${widget.charecterModel.episodeModel.length})',
+        'Bölümler (${widget.charecterModel.episode.length})',
         textAlign: TextAlign.start,
         style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
       ),
@@ -131,7 +131,7 @@ class _CharecterDetailViewState extends State<CharecterDetailView> {
         spacing: 7,
         children: [
           _labelWidget(context, label: widget.charecterModel.status),
-          _labelWidget(context, label: widget.charecterModel.originModel.name),
+          _labelWidget(context, label: widget.charecterModel.origin.name),
           _labelWidget(context, label: widget.charecterModel.gender),
           _labelWidget(context, label: widget.charecterModel.species),
         ],
